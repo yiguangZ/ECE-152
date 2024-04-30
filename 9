@@ -1,0 +1,41 @@
+module muxes (
+    input a_i, b_i, c_i, d_i,
+    input logic [1:0] sel4_i,
+    output logic y0_o, y1_o
+);
+    // Define internal signals for intermediate results
+    logic y0_temp, y1_temp;
+
+    // 4-to-1 Mux implementation
+    always_comb begin
+        case (sel4_i)
+            2'b00: begin // sel4_i = 00
+                y0_temp = a_i;
+                y1_temp = b_i;
+            end
+            2'b01: begin // sel4_i = 01
+                y0_temp = c_i;
+                y1_temp = d_i;
+            end
+            2'b10: begin // sel4_i = 10
+                y0_temp = b_i;
+                y1_temp = c_i;
+            end
+            2'b11: begin // sel4_i = 11
+                y0_temp = d_i;
+                y1_temp = a_i;
+            end
+            default: begin
+                // Handle default case, if needed
+                y0_temp = 1'b0; // For example, set to 0
+                y1_temp = 1'b0;
+            end
+        endcase
+    end
+
+    // Assign outputs after mux operation
+    assign y0_o = y0_temp;
+    assign y1_o = y1_temp;
+
+endmodule
+
